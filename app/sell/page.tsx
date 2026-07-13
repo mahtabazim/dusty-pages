@@ -42,7 +42,7 @@ export default async function SellPage() {
   return (
     <>
       <TopBar />
-      <main className="mx-auto w-full max-w-6xl px-4 py-6"><div className="mx-auto max-w-lg">
+      <main className="mx-auto w-full max-w-6xl px-4 py-6"><div className="mx-auto max-w-lg md:max-w-none">
         <h1 className="mb-1 text-xl font-semibold">Sell a book</h1>
         <p className="mb-6 text-sm text-muted-foreground">
           Scan it, describe it, price it — done in a minute.
