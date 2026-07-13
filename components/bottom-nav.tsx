@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 const items = [
   { href: "/", label: "Home", icon: Home },
   { href: "/search", label: "Search", icon: Search },
-  { href: "/sell", label: "Sell", icon: PlusCircle, highlight: true },
+  { href: "/sell", label: "Sell", icon: PlusCircle },
   { href: "/chats", label: "Chats", icon: MessageCircle },
 ] as const;
 
@@ -36,7 +36,7 @@ export function BottomNav() {
               )}
             >
               <Icon
-                className={cn("size-5", highlight && "size-6 text-primary")}
+                className={"size-5"}
                 strokeWidth={active ? 2.4 : 1.8}
               />
               {label}
