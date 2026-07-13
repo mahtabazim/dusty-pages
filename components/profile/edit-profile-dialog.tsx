@@ -39,6 +39,12 @@ export function EditProfileDialog({
     setLocating(true);
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
+        if (pos.coords.accuracy > 100) {
+      toast.error(
+        `Location is too inaccurate (${Math.round(pos.coords.accuracy)} m). Please move outdoors or enable GPS.`
+      );
+      return;
+    }
         const { latitude, longitude } = pos.coords;
         setCoords({ lat: latitude, lng: longitude });
         // Best-effort reverse geocode to prefill city/area.
@@ -52,8 +58,8 @@ export function EditProfileDialog({
             const addr = data.address ?? {};
             setForm((f) => ({
               ...f,
-              city: f.city || addr.city || addr.town || addr.village || addr.county || "",
-              area: f.area || addr.suburb || addr.neighbourhood || addr.road || "",
+              city:  addr.city ?? addr.town ?? addr.village ?? addr.county ?? "",
+              area:  addr.suburb ?? addr.neighbourhood ?? addr.road ?? addr.hamlet ?? "",
             }));
           }
         } catch {
@@ -65,6 +71,10 @@ export function EditProfileDialog({
       () => {
         setLocating(false);
         toast.error("Could not get your location.");
+      },
+      { 
+        enableHighAccuracy: true,
+        maximumAge: 0,
       },
     );
   }
