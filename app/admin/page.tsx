@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { and, count, eq, gte, sql, sum } from "drizzle-orm";
+import { and, count, eq, gte, inArray, isNotNull, sql, sum } from "drizzle-orm";
 import { db } from "@/lib/db";
 import {
   coinLedger,
@@ -74,8 +74,16 @@ export default async function AdminDashboard() {
       .from(coinLedger)
       .where(
         and(
-          sql`${coinLedger.type} like 'EARN_%'`,
-          sql`${coinLedger.userId} is not null`,
+          // LIKE doesn't work on enum columns; enumerate the earn types.
+          inArray(coinLedger.type, [
+            "EARN_SIGNUP",
+            "EARN_SALE",
+            "EARN_REFERRAL",
+            "EARN_FIRST_LISTING",
+            "EARN_DAILY_LOGIN",
+            "EARN_REVIEW",
+          ]),
+          isNotNull(coinLedger.userId),
           eq(coinLedger.account, "available"),
         ),
       ),
