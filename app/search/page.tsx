@@ -107,7 +107,7 @@ export default async function SearchPage(props: {
       .where(eq(categories.active, true))
       .orderBy(asc(categories.sortOrder)),
   ]);
-
+  console.log("Distances:", results.map((r) => r.distanceKm));
   return (
     <>
       <TopBar />

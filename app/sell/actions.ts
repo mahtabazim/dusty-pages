@@ -84,6 +84,8 @@ export async function createListing(
         ...input,
         city: input.city ?? session.user.city ?? undefined,
         area: input.area ?? session.user.area ?? undefined,
+        latitude: input.latitude ?? session.user.latitude ?? undefined,
+        longitude: input.longitude ?? session.user.longitude ?? undefined,
         expiresAt: addDays(new Date(), expiryDays),
       })
       .returning({ id: listings.id });
