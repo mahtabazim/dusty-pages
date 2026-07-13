@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Jost, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { BottomNav } from "@/components/bottom-nav";
@@ -74,6 +75,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <Providers>
           <div className="flex-1 pb-16 md:pb-0">{children}</div>
+          <Analytics />
           <BottomNav />
         </Providers>
       </body>
