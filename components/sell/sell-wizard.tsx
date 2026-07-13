@@ -118,7 +118,7 @@ export function SellWizard({ categories }: { categories: Category[] }) {
   /* ---------------- Step 1: scan / enter ---------------- */
   if (step === 1) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 md:grid md:grid-cols-2 md:items-stretch md:gap-10 md:space-y-0">
         {scanning && (
           <IsbnScanner
             onDetected={(isbn) => {
@@ -132,48 +132,50 @@ export function SellWizard({ categories }: { categories: Category[] }) {
         <Button
           type="button"
           size="lg"
-          className="h-auto w-full flex-col gap-2 py-6"
+          className="h-auto w-full flex-col gap-2 py-6 md:h-full md:gap-3 md:py-16"
           onClick={() => setScanning(true)}
         >
-          <Camera className="size-8" />
+          <Camera className="size-8 md:size-12" />
           Scan ISBN barcode
           <span className="text-xs font-normal opacity-80">
             Auto-fills title, author, cover & price
           </span>
         </Button>
-        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-          <div className="h-px flex-1 bg-border" /> or <div className="h-px flex-1 bg-border" />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="isbn">Enter ISBN</Label>
-          <div className="flex gap-2">
-            <Input
-              id="isbn"
-              value={isbnInput}
-              onChange={(e) => setIsbnInput(e.target.value)}
-              placeholder="9780143333623"
-              inputMode="numeric"
-            />
-            <Button
-              type="button"
-              variant="secondary"
-              disabled={looking || isbnInput.replace(/[^0-9Xx]/g, "").length < 10}
-              onClick={() => lookup(isbnInput.replace(/[^0-9Xx]/g, ""))}
-            >
-              {looking ? <Spinner /> : <Barcode className="size-4" />}
-              Look up
-            </Button>
+        <div className="space-y-6 md:flex md:flex-col md:justify-center">
+          <div className="flex items-center gap-3 text-xs text-muted-foreground md:hidden">
+            <div className="h-px flex-1 bg-border" /> or <div className="h-px flex-1 bg-border" />
           </div>
+          <div className="space-y-2">
+            <Label htmlFor="isbn">Enter ISBN</Label>
+            <div className="flex gap-2">
+              <Input
+                id="isbn"
+                value={isbnInput}
+                onChange={(e) => setIsbnInput(e.target.value)}
+                placeholder="9780143333623"
+                inputMode="numeric"
+              />
+              <Button
+                type="button"
+                variant="secondary"
+                disabled={looking || isbnInput.replace(/[^0-9Xx]/g, "").length < 10}
+                onClick={() => lookup(isbnInput.replace(/[^0-9Xx]/g, ""))}
+              >
+                {looking ? <Spinner /> : <Barcode className="size-4" />}
+                Look up
+              </Button>
+            </div>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={() => setStep(2)}
+          >
+            <BookOpen className="size-4" />
+            No ISBN? Enter details manually
+          </Button>
         </div>
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full"
-          onClick={() => setStep(2)}
-        >
-          <BookOpen className="size-4" />
-          No ISBN? Enter details manually
-        </Button>
       </div>
     );
   }
@@ -188,9 +190,14 @@ export function SellWizard({ categories }: { categories: Category[] }) {
       <input type="hidden" name="mrpInr" value={draft.mrpInr ?? ""} />
       <input type="hidden" name="condition" value={condition} />
 
-      <div className={cn(step !== 2 && "hidden", "space-y-5")}>
-        <div className="flex gap-4">
-          <div className="relative aspect-3/4 w-28 shrink-0 overflow-hidden rounded-lg border bg-muted">
+      <div
+        className={cn(
+          step !== 2 && "hidden",
+          "space-y-5 md:grid md:grid-cols-[300px_1fr] md:items-start md:gap-10 md:space-y-0",
+        )}
+      >
+        <div className="flex gap-4 md:flex-col">
+          <div className="relative aspect-3/4 w-28 shrink-0 overflow-hidden rounded-lg border bg-muted md:w-full">
             {draft.coverUrl ? (
               <Image src={draft.coverUrl} alt="Cover" fill className="object-cover" sizes="112px" />
             ) : (
@@ -223,6 +230,7 @@ export function SellWizard({ categories }: { categories: Category[] }) {
           </div>
         </div>
 
+        <div className="space-y-5">
         <div className="space-y-2">
           <Label htmlFor="title">Title *</Label>
           <Input
@@ -331,11 +339,17 @@ export function SellWizard({ categories }: { categories: Category[] }) {
         >
           Next: set your price
         </Button>
+        </div>
       </div>
 
-      <div className={cn(step !== 3 && "hidden", "space-y-5")}>
+      <div
+        className={cn(
+          step !== 3 && "hidden",
+          "space-y-5 md:grid md:grid-cols-2 md:items-start md:gap-x-10 md:gap-y-5 md:space-y-0",
+        )}
+      >
         {suggestion && (
-          <Alert>
+          <Alert className="md:col-span-2">
             <Sparkles className="text-primary" />
             <AlertTitle>Suggested price: {suggestion.suggested} coins</AlertTitle>
             <AlertDescription>
@@ -372,12 +386,12 @@ export function SellWizard({ categories }: { categories: Category[] }) {
         </div>
 
         {state.error && (
-          <p className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          <p className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive md:col-span-2">
             {state.error}
           </p>
         )}
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 md:col-span-2">
           <Button type="button" variant="outline" onClick={() => setStep(2)}>
             Back
           </Button>
