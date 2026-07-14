@@ -73,6 +73,16 @@ export default async function HomePage() {
   return (
     <>
       <TopBar />
+      <div>
+        <a href="https://peerlist.io/mdmahtab/project/dustypages" target="_blank" rel="noreferrer">
+				<img
+					src="https://peerlist.io/api/v1/projects/embed/PRJHDNDA987P6D97R27NNMLEJA7KMP?showUpvote=false&theme=light"
+					alt="DustyPages"
+          width={'auto'}
+          height={'72px'}
+				/>
+			</a>
+      </div>
       <main className="mx-auto max-w-6xl space-y-6 px-4 py-4">
         {!session && (
           <section className="rounded-2xl bg-primary px-6 py-10 text-primary-foreground md:px-12 md:py-14">
