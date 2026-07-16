@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { banners, categories, listings } from "@/lib/db/schema";
 import { getSession } from "@/lib/session";
 import { TopBar } from "@/components/top-bar";
-import { ListingCard } from "@/components/listing-card";
+import { LISTING_GRID, ListingCard } from "@/components/listing-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -23,7 +23,8 @@ import {
   Sparkles,
   Star,
 } from "lucide-react";
-import { CategoryIcon } from "@/components/icons";
+import { BrowseSelect } from "@/components/browse-select";
+import { IdeaIllustration } from "@/components/idea-illustration";
 
 const COLLECTIONS = [
   { label: "Under 50 coins", icon: Coins, href: "/search?max=50&sort=price_asc" },
@@ -31,6 +32,12 @@ const COLLECTIONS = [
   { label: "Exam season", icon: GraduationCap, href: "/search?category=competitive-exams" },
   { label: "Textbooks", icon: BookOpen, href: "/search?category=academic" },
   { label: "Most wanted", icon: Flame, href: "/search?sort=popular" },
+];
+
+const IDEA_STEPS = [
+  { icon: BookOpen, label: "List a book in about a minute" },
+  { icon: HandCoins, label: "Earn coins when it sells" },
+  { icon: Star, label: "Meet nearby, scan, done" },
 ];
 
 export default async function HomePage() {
@@ -74,15 +81,30 @@ export default async function HomePage() {
     <>
       <TopBar />
       
-      <main className="mx-auto max-w-6xl space-y-6 px-4 py-4">
+      <main className="mx-auto max-w-6xl space-y-10 px-4 py-6">
         {!session && (
-          <section className="rounded-2xl bg-primary px-6 py-10 text-primary-foreground md:px-12 md:py-14">
-            <div className="mx-auto max-w-2xl space-y-4 text-center">
-              <Badge variant="secondary">No money. Just books & coins.</Badge>
-              <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
+          <section className="relative overflow-hidden rounded-3xl bg-primary px-6 py-14 text-primary-foreground md:px-12 md:py-20">
+            {/* Soft radial wash keeps the large flat fill from reading as a
+                solid block without adding an image request. */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -right-24 -top-24 size-96 rounded-full bg-primary-foreground/10 blur-3xl"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -bottom-32 -left-24 size-96 rounded-full bg-primary-foreground/5 blur-3xl"
+            />
+            <div className="relative mx-auto max-w-2xl space-y-5 text-center">
+              <Badge
+                variant="secondary"
+                className="border-0 bg-primary-foreground/15 text-primary-foreground backdrop-blur-sm"
+              >
+                No money. Just books &amp; coins.
+              </Badge>
+              <h1 className="text-balance text-headline md:text-display">
                 Swap your finished books for your next great read
               </h1>
-              <p className="text-sm opacity-90 md:text-base">
+              <p className="text-pretty text-sm/relaxed opacity-90 md:text-base/relaxed">
                 Sell used books to readers near you, earn coins, and spend them
                 on books from the community — with escrow-protected meetups.
               </p>
@@ -128,44 +150,60 @@ export default async function HomePage() {
           </div>
         )}
 
-        <section>
-          <h2 className="mb-2 text-sm font-semibold text-muted-foreground">
-            Browse categories
-          </h2>
-          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hidden">
-            {cats.map((c) => (
-              <Link
-                key={c.slug}
-                href={`/search?category=${c.slug}`}
-                className="flex items-center gap-1.5 whitespace-nowrap rounded-full border bg-card px-4 py-2 text-sm font-medium transition-colors hover:bg-accent"
-              >
-                <CategoryIcon slug={c.slug} className="size-4 text-primary" />
-                {c.name}
-              </Link>
-            ))}
+        {/* The idea, in one line — shown to everyone, since signed-in users
+            never see the marketing hero above. */}
+        <section className="overflow-hidden rounded-3xl border border-border/70 bg-surface-2">
+          <div className="grid items-center gap-8 p-6 md:grid-cols-[1.35fr_1fr] md:p-8">
+            <div className="space-y-4">
+              <Badge variant="secondary">How DustyPages works</Badge>
+              <h2 className="text-balance text-title md:text-headline">
+                Your shelf is someone else&apos;s wishlist
+              </h2>
+              <p className="text-pretty text-sm/relaxed text-muted-foreground">
+                List a book you&apos;ve finished and earn coins when a reader
+                near you picks it up. Spend those coins on their books. No cash
+                changes hands — just books moving between people who&apos;ll
+                actually read them.
+              </p>
+              {/* Stacked, not a 3-up grid: in this column each cell was ~150px
+                  wide, so every label broke mid-phrase ("List a book in about
+                  a / minute"). Stacking also gives the column enough height to
+                  meet the illustration, which is what left the dead band. */}
+              <ul className="space-y-2.5">
+                {IDEA_STEPS.map((s) => (
+                  <li key={s.label} className="flex items-center gap-2.5">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground">
+                      <s.icon className="size-4" />
+                    </span>
+                    <span className="text-label">{s.label}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* Capped on every breakpoint. Uncapped (md:max-w-none) the 260×200
+                artwork filled the 1fr column at ~480px wide / ~370px tall and
+                became the row's height driver — a decorative SVG must never
+                set the layout height. */}
+            <IdeaIllustration className="mx-auto w-full max-w-[280px]" />
           </div>
         </section>
 
+        {/* Sits under the hero banner and directly above the feed it filters.
+            No section heading: the two placeholders ("Browse by category",
+            "Jump to a collection") already say what this is, and a label above
+            them only adds chrome. */}
         <section>
-          <h2 className="mb-2 text-sm font-semibold text-muted-foreground">
-            Curated collections
-          </h2>
-          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hidden">
-            {COLLECTIONS.map((c) => (
-              <Link
-                key={c.href}
-                href={c.href}
-                className="flex items-center gap-1.5 whitespace-nowrap rounded-full border bg-card px-4 py-2 text-sm font-medium transition-colors hover:bg-accent"
-              >
-                <c.icon className="size-4 text-primary" />
-                {c.label}
-              </Link>
-            ))}
-          </div>
+          <BrowseSelect
+            categories={cats.map((c) => ({ value: c.slug, label: c.name }))}
+            collections={COLLECTIONS.map((c) => ({
+              value: c.href,
+              label: c.label,
+            }))}
+          />
         </section>
 
         <section>
-          <h2 className="mb-3 flex items-center gap-2 text-base font-semibold">
+          <h2 className="mb-4 text-title">
             {userCity ? `Books near ${userCity}` : "Fresh arrivals"}
           </h2>
           {feed.length === 0 ? (
@@ -182,7 +220,7 @@ export default async function HomePage() {
               </EmptyHeader>
             </Empty>
           ) : (
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+            <div className={LISTING_GRID}>
               {feed.map((l) => (
                 <ListingCard key={l.id} listing={l} />
               ))}
@@ -190,16 +228,6 @@ export default async function HomePage() {
           )}
         </section>
       </main>
-      <div className="sticky bottom-4">
-        <a href="https://peerlist.io/mdmahtab/project/dustypages" target="_blank" rel="noreferrer">
-				<img
-					src="https://peerlist.io/api/v1/projects/embed/PRJHDNDA987P6D97R27NNMLEJA7KMP?showUpvote=false&theme=light"
-					alt="DustyPages"
-          width={'auto'}
-          height={'72px'}
-				/>
-			</a>
-      </div>
     </>
   );
 }

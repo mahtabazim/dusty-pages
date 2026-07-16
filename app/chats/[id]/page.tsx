@@ -71,13 +71,17 @@ export default async function ChatPage(props: { params: Promise<{ id: string }> 
             <p className="truncate text-xs text-muted-foreground">
               {listing.title} ·{" "}
               <span className="inline-flex items-center gap-0.5 font-medium text-primary">
-                <Coins className="size-3 text-amber-600" />
+                <Coins className="size-3 text-coin" />
                 {listing.priceCoins}
               </span>
             </p>
           </div>
         </Link>
-        <ChatMenu otherUserId={other.id} otherUserName={other.name} />
+        <ChatMenu
+          conversationId={conv.id}
+          otherUserId={other.id}
+          otherUserName={other.name}
+        />
       </header>
 
       <ChatRoom

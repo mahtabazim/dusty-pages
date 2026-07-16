@@ -51,10 +51,13 @@ export async function TopBar() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-card/95 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border/60 bg-card/80 backdrop-blur-xl">
       {session && <RealtimeListener userId={session.user.id} />}
-      <div className="mx-auto flex h-14 max-w-6xl items-center gap-2 px-4">
-        <Link href="/" className="flex items-center gap-2 font-semibold">
+      <div className="mx-auto flex h-16 max-w-6xl items-center gap-2 px-4">
+        <Link
+          href="/"
+          className="flex items-center gap-2 rounded-md font-semibold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+        >
           <Logo className="size-6 text-primary" />
           <span className="text-lg tracking-tight">DustyPages</span>
         </Link>
@@ -65,13 +68,13 @@ export async function TopBar() {
           className="mx-8 hidden flex-1 justify-center md:flex"
           role="search"
         >
-          <div className="relative w-full max-w-md">
-            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <div className="group relative w-full max-w-md">
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
             <Input
               type="search"
               name="q"
               placeholder="Search books, authors or ISBN…"
-              className="h-9 w-full rounded-full pl-9"
+              className="h-10 w-full rounded-full border-transparent bg-surface-3 pl-10 transition-colors focus-visible:bg-card"
             />
           </div>
         </form>
@@ -93,7 +96,7 @@ export async function TopBar() {
                 size="sm"
                 render={<Link href="/wallet" aria-label={`Wallet: ${balance} coins`} />}
               >
-                <Coins className="size-4 text-amber-600 dark:text-amber-400" />
+                <Coins className="size-4 text-coin" />
                 <span className="font-semibold">{balance}</span>
               </Button>
               {/* Desktop-only chat icon; mobile uses the bottom nav */}
@@ -105,7 +108,7 @@ export async function TopBar() {
               >
                 <MessageCircle className="size-5" />
                 {unreadMessages > 0 && (
-                  <span className="absolute -right-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">
+                  <span className="absolute -right-0.5 -top-0.5 flex min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold leading-4 text-primary-foreground ring-2 ring-card">
                     {unreadMessages > 9 ? "9+" : unreadMessages}
                   </span>
                 )}
@@ -118,7 +121,7 @@ export async function TopBar() {
               >
                 <Bell className="size-5" />
                 {unreadNotifications > 0 && (
-                  <span className="absolute -right-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">
+                  <span className="absolute -right-0.5 -top-0.5 flex min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold leading-4 text-primary-foreground ring-2 ring-card">
                     {unreadNotifications > 9 ? "9+" : unreadNotifications}
                   </span>
                 )}

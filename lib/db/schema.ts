@@ -323,6 +323,11 @@ export const conversations = pgTable(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     lastMessageAt: timestamp("last_message_at").defaultNow().notNull(),
+    // Per-user soft delete: the conversation is hidden from a participant's
+    // list once they delete it, and reappears only if a newer message arrives
+    // (lastMessageAt > their deleted_at). History is never destroyed.
+    buyerDeletedAt: timestamp("buyer_deleted_at"),
+    sellerDeletedAt: timestamp("seller_deleted_at"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
   },
   (t) => [

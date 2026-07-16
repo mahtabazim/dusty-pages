@@ -194,7 +194,7 @@ export default async function ListingPage(props: {
             </div>
 
             <p className="flex items-center gap-1.5 text-2xl font-bold text-primary">
-              <Coins className="size-6 text-amber-600 dark:text-amber-400" />
+              <Coins className="size-6 text-coin" />
               {listing.priceCoins} coins
             </p>
 
@@ -251,7 +251,7 @@ export default async function ListingPage(props: {
                 <p className="text-xs text-muted-foreground">
                   {ratingAvg ? (
                     <span className="inline-flex items-center gap-0.5">
-                      <Star className="size-3 fill-amber-400 text-amber-400" />
+                      <Star className="size-3 fill-star text-star" />
                       {ratingAvg} ({ratingStats.total})
                     </span>
                   ) : (

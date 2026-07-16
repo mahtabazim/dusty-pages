@@ -112,7 +112,7 @@ export default async function WalletPage() {
                       className={cn(
                         "flex size-8 shrink-0 items-center justify-center rounded-full",
                         isEscrowHold
-                          ? "bg-amber-500/15 text-amber-600"
+                          ? "bg-coin/15 text-coin"
                           : positive
                             ? "bg-emerald-500/15 text-emerald-600"
                             : "bg-red-500/15 text-red-600",
@@ -139,7 +139,7 @@ export default async function WalletPage() {
                       className={cn(
                         "text-sm font-semibold",
                         isEscrowHold
-                          ? "text-amber-600"
+                          ? "text-coin"
                           : positive
                             ? "text-emerald-600"
                             : "text-red-600",

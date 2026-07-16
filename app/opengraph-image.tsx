@@ -18,18 +18,18 @@ export default function OpengraphImage() {
           alignItems: "center",
           justifyContent: "center",
           gap: 56,
-          background: "linear-gradient(135deg, #faf6ef 0%, #f0e6d6 100%)",
+          background: "linear-gradient(135deg, #fafafc 0%, #e9e7f8 100%)",
           fontFamily: "sans-serif",
         }}
       >
         <svg width="220" height="220" viewBox="0 0 512 512">
-          <path fill="#7c5c3e" d={BOOKSHELF_PATH} />
+          <path fill="#4c46c0" d={BOOKSHELF_PATH} />
         </svg>
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <div style={{ fontSize: 84, fontWeight: 700, color: "#3d2f22" }}>
+          <div style={{ fontSize: 84, fontWeight: 700, color: "#22222b" }}>
             DustyPages
           </div>
-          <div style={{ fontSize: 34, color: "#7c5c3e", maxWidth: 620 }}>
+          <div style={{ fontSize: 34, color: "#4c46c0", maxWidth: 620 }}>
             Swap your finished books for your next great read
           </div>
           <div
@@ -39,7 +39,7 @@ export default function OpengraphImage() {
               alignItems: "center",
               gap: 10,
               fontSize: 26,
-              color: "#8a7355",
+              color: "#6b6a80",
             }}
           >
             No money — just books & coins

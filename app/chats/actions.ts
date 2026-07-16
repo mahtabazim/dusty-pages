@@ -248,3 +248,22 @@ export async function reportUser(
   });
   return {};
 }
+
+/**
+ * Soft-deletes a conversation for the current user only: it disappears from
+ * their chat list until a newer message arrives. The other participant and all
+ * history (messages, offers, orders) are untouched.
+ */
+export async function deleteConversation(
+  conversationId: string,
+): Promise<{ error?: string }> {
+  const session = await requireUser();
+  const conv = await getConversationForUser(conversationId, session.user.id);
+  if (!conv) return { error: "Conversation not found." };
+  const isBuyer = conv.buyerId === session.user.id;
+  await db
+    .update(conversations)
+    .set(isBuyer ? { buyerDeletedAt: new Date() } : { sellerDeletedAt: new Date() })
+    .where(eq(conversations.id, conversationId));
+  return {};
+}

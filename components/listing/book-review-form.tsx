@@ -25,7 +25,7 @@ export function BookReviewForm({ listingId }: { listingId: string }) {
             <Star
               className={cn(
                 "size-6",
-                n <= stars ? "fill-amber-400 text-amber-400" : "text-muted-foreground/40",
+                n <= stars ? "fill-star text-star" : "text-muted-foreground/40",
               )}
             />
           </button>

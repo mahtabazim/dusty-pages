@@ -80,7 +80,7 @@ export default async function OrdersPage() {
                 <div className="min-w-0 flex-1 space-y-1">
                   <p className="line-clamp-1 text-sm font-medium">{listing.title}</p>
                   <p className="flex items-center gap-1 text-sm font-semibold text-primary">
-                    <Coins className="size-3.5 text-amber-600" /> {order.priceCoins}
+                    <Coins className="size-3.5 text-coin" /> {order.priceCoins}
                   </p>
                   <p className="text-xs text-muted-foreground">
                     {role} · {formatDistanceToNow(order.createdAt, { addSuffix: true })}

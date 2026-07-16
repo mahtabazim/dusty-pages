@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Jost, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { BottomNav } from "@/components/bottom-nav";
 
-const jost = Jost({
+const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
 });
@@ -57,7 +57,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#7c5c3e",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#212028" },
+  ],
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -71,7 +74,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${jost.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Script

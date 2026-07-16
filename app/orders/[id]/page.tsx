@@ -122,7 +122,7 @@ export default async function OrderPage(props: { params: Promise<{ id: string }>
           <div className="min-w-0 flex-1">
             <p className="line-clamp-2 text-sm font-medium">{listing.title}</p>
             <p className="mt-1 flex items-center gap-1 font-semibold text-primary">
-              <Coins className="size-4 text-amber-600" /> {order.priceCoins} coins
+              <Coins className="size-4 text-coin" /> {order.priceCoins} coins
             </p>
             <p className="text-xs text-muted-foreground">
               Order placed {format(order.createdAt, "d MMM yyyy, h:mm a")}

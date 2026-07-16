@@ -445,7 +445,7 @@ export function ChatRoom({
                 />
               }
             >
-              <Coins className="size-5 text-amber-600" />
+              <Coins className="size-5 text-coin" />
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

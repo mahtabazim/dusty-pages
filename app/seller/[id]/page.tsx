@@ -14,7 +14,7 @@ import { getSession } from "@/lib/session";
 import { formatResponseTime, getAvgResponseMinutes } from "@/lib/seller-stats";
 import { TopBar } from "@/components/top-bar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ListingCard } from "@/components/listing-card";
+import { LISTING_GRID, ListingCard } from "@/components/listing-card";
 import { FollowButton } from "@/components/profile/follow-button";
 
 export default async function SellerPage(props: { params: Promise<{ id: string }> }) {
@@ -103,7 +103,7 @@ export default async function SellerPage(props: { params: Promise<{ id: string }
             <p className="mt-0.5 flex items-center gap-3 text-xs text-muted-foreground">
               {ratingAvg && (
                 <span className="inline-flex items-center gap-0.5">
-                  <Star className="size-3 fill-amber-400 text-amber-400" />
+                  <Star className="size-3 fill-star text-star" />
                   {ratingAvg} ({ratingStats.total})
                 </span>
               )}
@@ -133,7 +133,7 @@ export default async function SellerPage(props: { params: Promise<{ id: string }
               No active listings right now. Follow to get notified about new books!
             </p>
           ) : (
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+            <div className={LISTING_GRID}>
               {activeListings.map((l) => (
                 <ListingCard key={l.id} listing={l} />
               ))}
@@ -158,7 +158,7 @@ export default async function SellerPage(props: { params: Promise<{ id: string }
                     </Avatar>
                     <span className="text-sm font-medium">{rater.name}</span>
                     <span className="ml-auto inline-flex items-center gap-0.5 text-sm">
-                      <Star className="size-3.5 fill-amber-400 text-amber-400" />
+                      <Star className="size-3.5 fill-star text-star" />
                       {rating.stars}
                     </span>
                   </div>

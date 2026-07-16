@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Buy and sell used books with coins — a closed-loop community marketplace for readers.",
     start_url: "/",
     display: "standalone",
-    background_color: "#faf7f2",
-    theme_color: "#7c5c3e",
+    background_color: "#fafafc",
+    theme_color: "#4c46c0",
     orientation: "portrait",
     categories: ["books", "shopping", "social"],
     icons: [

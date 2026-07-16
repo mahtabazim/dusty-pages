@@ -45,7 +45,24 @@ export default async function ChatsLayout({
         and(eq(conversations.sellerId, me), eq(other.id, conversations.buyerId)),
       ),
     )
-    .where(or(eq(conversations.buyerId, me), eq(conversations.sellerId, me)))
+    .where(
+      and(
+        or(eq(conversations.buyerId, me), eq(conversations.sellerId, me)),
+        // Hide conversations this user has soft-deleted, unless a newer
+        // message has arrived since they deleted it.
+        sql`(
+          case when ${conversations.buyerId} = ${me}
+               then ${conversations.buyerDeletedAt}
+               else ${conversations.sellerDeletedAt}
+          end
+        ) is null or ${conversations.lastMessageAt} > (
+          case when ${conversations.buyerId} = ${me}
+               then ${conversations.buyerDeletedAt}
+               else ${conversations.sellerDeletedAt}
+          end
+        )`,
+      ),
+    )
     .orderBy(desc(conversations.lastMessageAt))
     .limit(100);
 

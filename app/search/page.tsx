@@ -6,7 +6,7 @@ import { categories, listings } from "@/lib/db/schema";
 import { getSession } from "@/lib/session";
 import { listingDistanceKm } from "@/lib/geo";
 import { TopBar } from "@/components/top-bar";
-import { ListingCard } from "@/components/listing-card";
+import { LISTING_GRID, ListingCard } from "@/components/listing-card";
 import { SearchFilters } from "@/components/search/search-filters";
 import { SaveSearchButton } from "@/components/search/save-search-button";
 import {
@@ -135,7 +135,7 @@ export default async function SearchPage(props: {
             </EmptyHeader>
           </Empty>
         ) : (
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+          <div className={LISTING_GRID}>
             {results.map((l) => (
               <ListingCard key={l.id} listing={l} />
             ))}

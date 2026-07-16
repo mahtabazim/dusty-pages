@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { favorites, listings } from "@/lib/db/schema";
 import { requireUser } from "@/lib/session";
 import { TopBar } from "@/components/top-bar";
-import { ListingCard } from "@/components/listing-card";
+import { LISTING_GRID, ListingCard } from "@/components/listing-card";
 import {
   Empty,
   EmptyDescription,
@@ -57,7 +57,7 @@ export default async function FavoritesPage() {
             </EmptyHeader>
           </Empty>
         ) : (
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+          <div className={LISTING_GRID}>
             {rows.map((l) => (
               <ListingCard key={l.id} listing={l} />
             ))}

@@ -20,26 +20,37 @@ export function BottomNav() {
     return null;
   }
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 border-t bg-card/95 backdrop-blur pb-[env(safe-area-inset-bottom)] md:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border/60 bg-card/80 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden">
       <div className="mx-auto grid max-w-md grid-cols-4">
-        {items.map(({ href, label, icon: Icon, ...rest }) => {
+        {items.map(({ href, label, icon: Icon }) => {
           const active =
             href === "/" ? pathname === "/" : pathname.startsWith(href);
-          const highlight = "highlight" in rest && rest.highlight;
           return (
             <Link
               key={href}
               href={href}
+              aria-current={active ? "page" : undefined}
               className={cn(
-                "flex flex-col items-center gap-0.5 py-2 text-[11px]",
-                active ? "text-primary font-medium" : "text-muted-foreground",
+                "group flex min-h-14 flex-col items-center justify-center gap-1 text-label transition-colors duration-200",
+                active
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
-              <Icon
-                className={"size-5"}
-                strokeWidth={active ? 2.4 : 1.8}
-              />
-              {label}
+              {/* Pill sits behind the icon and carries the active state, so the
+                  target stays a full-height tap area while the affordance reads
+                  as a compact indicator. */}
+              <span
+                className={cn(
+                  "flex h-7 w-12 items-center justify-center rounded-full transition-all duration-200 ease-emphasized",
+                  active
+                    ? "bg-accent scale-100"
+                    : "scale-90 bg-transparent group-active:bg-muted",
+                )}
+              >
+                <Icon className="size-5" strokeWidth={active ? 2.3 : 1.8} />
+              </span>
+              <span className={cn(active && "font-semibold")}>{label}</span>
             </Link>
           );
         })}

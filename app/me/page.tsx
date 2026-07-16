@@ -141,7 +141,10 @@ export default async function MePage() {
               and earn bonus coins!
             </p>
           ) : (
-            <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 xl:grid-cols-4">
+            /* Not LISTING_GRID: this feed sits in the ~760px column next to
+               the profile sidebar, not the full max-w-6xl width, so it needs
+               one column fewer to land at the same ~260px card. */
+            <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
               {myListings.map((l) => (
                 <div key={l.id} className="relative">
                   {l.status !== "active" && (

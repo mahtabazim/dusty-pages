@@ -37,7 +37,7 @@ export function RatingForm({
               className={cn(
                 "size-7 transition-colors",
                 n <= stars
-                  ? "fill-amber-400 text-amber-400"
+                  ? "fill-star text-star"
                   : "text-muted-foreground/40",
               )}
             />

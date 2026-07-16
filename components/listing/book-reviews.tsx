@@ -52,7 +52,7 @@ export async function BookReviews({
             </Avatar>
             <span className="text-sm font-medium">{author.name}</span>
             <span className="ml-auto inline-flex items-center gap-0.5 text-sm">
-              <Star className="size-3.5 fill-amber-400 text-amber-400" />
+              <Star className="size-3.5 fill-star text-star" />
               {review.stars}
             </span>
           </div>

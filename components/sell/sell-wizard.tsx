@@ -361,7 +361,7 @@ export function SellWizard({ categories }: { categories: Category[] }) {
         <div className="space-y-2">
           <Label htmlFor="priceCoins">Price in coins *</Label>
           <div className="relative">
-            <Coins className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-amber-600" />
+            <Coins className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-coin" />
             <Input
               id="priceCoins"
               name="priceCoins"
